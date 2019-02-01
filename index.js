@@ -23,15 +23,6 @@ module.exports = {
    * @return {Tree} Processed tree
    */
   preprocessTree(type, tree) {
-    this.options.babel = {
-      plugins: [
-        ['inline-replace-variables', {
-          "NODE_ENV": this.env,
-          "INCLUDE_GET_DEFAULT_PROPS": this.addonOptions.getDefaultProps
-        }]
-      ]
-    };
-
     return tree;
   },
   /**
@@ -43,6 +34,14 @@ module.exports = {
    */
   included(app) {
     this._super.included.apply(this, arguments);
+    this.options.babel = {
+      plugins: [
+        ['inline-replace-variables', {
+          "NODE_ENV": this.env,
+          "INCLUDE_GET_DEFAULT_PROPS": this.addonOptions.getDefaultProps
+        }]
+      ]
+    };
     const vendor = this.treePaths.vendor;
     this.env = process.env.EMBER_ENV || 'development';
 
